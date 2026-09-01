@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-
 import os
 import sys
 import json
@@ -742,6 +741,16 @@ class MultiRoomSwitcher:
                 self.driver.quit()
             except: pass
 
+def get_resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+
 class MultiRoomGUI:
     def __init__(self, root, switcher: MultiRoomSwitcher):
         self.root = root
@@ -749,6 +758,14 @@ class MultiRoomGUI:
         self.root.title("Tandro Multi-Room Monitor")
         self.root.geometry("1400x760")
         self.root.configure(bg="#202225")
+        
+        # Icon laden (funktioniert sowohl im Skript als auch in der kompilierten .exe)
+        icon_path = get_resource_path("app_icon.ico")
+        if os.path.exists(icon_path):
+            try:
+                self.root.iconbitmap(icon_path)
+            except Exception:
+                pass
         
         self.setup_styles()
         self.create_layout()
@@ -1176,6 +1193,13 @@ class MultiRoomGUI:
         self.root.after(100, self.update_gui_loop)
 
 def main():
+    # Windows Taskbar Icon Fix: Teilt Windows mit, dass dies eine eigenständige App ist
+    try:
+        import ctypes
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("tandro.multiroom.monitor.1_0")
+    except Exception:
+        pass
+
     root = tk.Tk()
     
     switcher = MultiRoomSwitcher()
