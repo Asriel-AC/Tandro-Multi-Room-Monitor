@@ -1,0 +1,31 @@
+{
+    "username": "",
+    "password": "",
+    "tandro_token": "",
+    "autojoin_rooms": [
+        1
+    ],
+    "autojoin_enabled": true,
+    "room_switch_interval": 5,
+    "auto_switch_enabled": false,
+    "room_positions": {
+        "1": {
+            "x": 150.0,
+            "y": 150.0
+        }
+    },
+    "chat_log_dir": "chat_logs",
+    "log_messages": true,
+    "afkMode": false,
+    "afkMessage": "Ich bin gerade AFK und antworte später!",
+    "afkCooldown": 60,
+    "socket": {
+        "url": "https://tandro.de",
+        "path": "socket.io",
+        "transports": [
+            "websocket"
+        ]
+    },
+    "discovered_rooms": {},
+    "monitored_rooms": []
+}
